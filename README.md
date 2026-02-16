@@ -58,6 +58,9 @@ GitHub: https://github.com/spana97
 
 ## Version History
 
+* 0.1.2
+    * Added synthetic data.
+
 * 0.1.1
     * Updated README.
 
