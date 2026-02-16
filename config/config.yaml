@@ -1,0 +1,3 @@
+data:
+  raw_google: "data/raw/google_reviews_syth.csv"
+  raw_trustpilot: "data/raw/trustpilot_reviews_syth.csv"
