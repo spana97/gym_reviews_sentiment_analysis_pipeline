@@ -1,3 +1,21 @@
 data:
-  raw_google: "data/raw/google_reviews_syth.csv"
-  raw_trustpilot: "data/raw/trustpilot_reviews_syth.csv"
+  raw_google: "data/synthetic_data/google_reviews.csv"
+  raw_trustpilot: "data/synthetic_data/trustpilot_reviews.csv"
+
+rename_mappings:
+  google:
+    Social Media Source: source
+    Club's Name: location
+    Creation Date: date_created
+    Comment: review
+    Overall Score: score
+
+  trustpilot:
+    Source Of Review: source
+    Location Name: location
+    Review Created (UTC): date_created
+    Review Content: review
+    Review Stars: score
+
+filters:
+  low_rating_max: 3
