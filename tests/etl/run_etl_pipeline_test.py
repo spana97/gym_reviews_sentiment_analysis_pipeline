@@ -11,8 +11,8 @@ from tests.config_test import TEST_CONFIG
 
 def test_run_etl_pipeline(tmp_path):
 
-    google_test_df = extract(TEST_CONFIG["data"]["raw_google"])
-    trustpilot_test_df = extract(TEST_CONFIG["data"]["raw_trustpilot"])
+    google_test_df = extract(TEST_CONFIG["data"]["test_google"])
+    trustpilot_test_df = extract(TEST_CONFIG["data"]["test_trustpilot"])
 
     google_clean = transform(google_test_df, "google", TEST_CONFIG)
     trustpilot_clean = transform(trustpilot_test_df, "trustpilot", TEST_CONFIG)
