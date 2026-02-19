@@ -6,7 +6,7 @@ Sentiment analysis of Google and Trustpilot customer reviews for an undisclosed 
 
 This project focuses on analysing customer feedback from Google and Trustpilot reviews for an undisclosed gym.
 
-> **Note:** The dataset used in this project is **synthetic**, generated using Python's Faker library.  
+> **Note:** The dataset used in this project is **synthetic**, generated using Python's Faker library.
 > All names, reviews, and other data points are **fictitious** and do not represent real individuals or actual gym locations.
 
 This project focuses on analysing customer feedback from Google and Trustpilot reviews for a gym. The aim is to understand customer sentiment, identify recurring themes in negative feedback, and extract actionable insights that can help improve customer satisfaction and overall service quality.

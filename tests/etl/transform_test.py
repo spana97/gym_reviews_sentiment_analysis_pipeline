@@ -1,6 +1,7 @@
 import pandas as pd
+
 from src.etl.transform import transform
-from tests.test_config import TEST_CONFIG, GOOGLE_TEST_DF, TRUSTPILOT_TEST_DF
+from tests.config_test import GOOGLE_TEST_DF, TEST_CONFIG, TRUSTPILOT_TEST_DF
 
 
 def test_transform_google():

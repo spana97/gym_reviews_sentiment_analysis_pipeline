@@ -1,9 +1,8 @@
-import pandas as pd
-from src.utils.config_loader import load_config
 from src.etl.extract import extract
-from src.etl.transform import transform
 from src.etl.helpers import combine_datasets
-from etl.load import load
+from src.etl.load import load
+from src.etl.transform import transform
+from src.utils.config_loader import load_config
 
 
 def run_etl_pipeline():

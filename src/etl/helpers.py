@@ -1,7 +1,8 @@
-import pandas as pd
 from typing import List
 
-# Tranform helpers
+import pandas as pd
+
+# Transform helpers
 
 
 def rename_and_select(df: pd.DataFrame, mappings: dict) -> pd.DataFrame:
@@ -75,7 +76,7 @@ def combine_datasets(dfs: List[pd.DataFrame]) -> pd.DataFrame:
     Combines multiple cleaned DataFrames into one.
     """
     if not dfs:
-        raise ValueError('No DataFrames provided to combine. "dfs" list is empty.')
+        raise ValueError(("No DataFrames provided to combine."))
     combined = pd.concat(dfs, ignore_index=True)
     print(f"Combined dataset shape: {combined.shape}")
     return combined
