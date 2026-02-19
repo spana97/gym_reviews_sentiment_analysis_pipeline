@@ -1,28 +1,31 @@
 import pandas as pd
-from src.utils.config_loader import load_config
+from src.etl.helpers import rename_and_select, cast_types, filter_rows
 
-config = load_config()
-
-
-def transform(df: pd.DataFrame, source: str) -> pd.DataFrame:
-
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f'Expected pd.DataFrame, got {type(df).__name__}')
-
-    mappings = config.get('rename_mappings', {}).get(source)
+def transform(df: pd.DataFrame, source: str, config: dict) -> pd.DataFrame:
+    """
+    Transform raw input DataFrame into clean standardized format.
+    """
+    mappings = config['rename_mappings'].get(source)
     if not mappings:
-        raise ValueError(f'No rename mappings found for source: "{source}"')
+        raise ValueError(f'No mappings defined for source "{source}"')
 
-    try:
-        df = df.rename(columns=mappings)
+    schema = config['schema']
 
-        columns_to_keep = list(mappings.values())
-        df = df[columns_to_keep]
+    # 1. Rename + keep expected columns
+    df = rename_and_select(df, mappings)
 
-        max_rating = config['filters']['low_rating_max']
-        return df[df['score'] <= max_rating].copy()
+    # 2. Remove rows without reviews
+    df = df.dropna(subset=['review'])
 
-    except KeyError as e:
-        raise KeyError(f'Mapping error for "{source}": Column {e} not found in input data.') from e
-    except Exception as e:
-        raise RuntimeError(f'Transformation failed for {source}: {e}')
+    # 3. Type casting
+    df = cast_types(df, schema)
+
+    # 4. Drop duplicates
+    df = df.drop_duplicates()
+
+    # 5. Rating filtering
+    max_rating = config['filters']['low_rating_max']
+    df = filter_rows(df, max_rating)
+
+    print(f'{source}: {df.shape[0]} rows after cleaning & filtering')
+    return df

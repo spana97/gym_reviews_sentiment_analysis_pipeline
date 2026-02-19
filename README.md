@@ -1,4 +1,5 @@
 # Gym Reviews Sentiment Analysis Pipeline
+
 Sentiment analysis of Google and Trustpilot customer reviews for an undisclosed gym.
 
 ## Description
@@ -6,7 +7,7 @@ Sentiment analysis of Google and Trustpilot customer reviews for an undisclosed 
 This project focuses on analysing customer feedback from Google and Trustpilot reviews for an undisclosed gym.
 
 > **Note:** The dataset used in this project is **synthetic**, generated using Python's Faker library.  
-> All names, reviews, and other data points are **fictitious** and do not represent real individuals or actual gym locations.  
+> All names, reviews, and other data points are **fictitious** and do not represent real individuals or actual gym locations.
 
 This project focuses on analysing customer feedback from Google and Trustpilot reviews for a gym. The aim is to understand customer sentiment, identify recurring themes in negative feedback, and extract actionable insights that can help improve customer satisfaction and overall service quality.
 
@@ -20,11 +21,11 @@ At this stage of the project, the full dependency list is still evolving and wil
 
 Known upcoming dependencies include (but are not limited to):
 
-* Python 3.x
-* BERTopic
-* pandas
-* scikit-learn
-* nltk / spaCy
+- Python 3.x
+- BERTopic
+- pandas
+- scikit-learn
+- nltk / spaCy
 
 A full requirements list will be added once the pipeline is implemented.
 
@@ -46,9 +47,9 @@ Sample command blocks will be included once the scripts exist.
 
 This section will be expanded as the project develops. Future items may include:
 
-* Common environment issues
-* Missing dependencies
-* How to re-run BERTopic visualisations
+- Common environment issues
+- Missing dependencies
+- How to re-run BERTopic visualisations
 
 ## Authors
 
@@ -58,16 +59,20 @@ GitHub: https://github.com/spana97
 
 ## Version History
 
-* 0.1.2
-    * Added synthetic data.
+- 0.1.3
+  - Added ETL pipeline.
 
-* 0.1.1
-    * Updated README.
+- 0.1.2
+  - Added synthetic data.
 
-* 0.1
-    * Initial repository setup and first commit.
+- 0.1.1
+  - Updated README.
+
+- 0.1
+  - Initial repository setup and first commit.
 
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* README template inspired by DomPizzie
+
+- README template inspired by DomPizzie

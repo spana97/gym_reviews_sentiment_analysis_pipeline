@@ -1,6 +1,7 @@
 data:
-  raw_google: "data/synthetic_data/google_reviews.csv"
-  raw_trustpilot: "data/synthetic_data/trustpilot_reviews.csv"
+  raw_google: "data/raw/google_reviews.csv"
+  raw_trustpilot: "data/raw/trustpilot_reviews.csv"
+  processed_output: "data/processed/low_rating_reviews_dataset.parquet"
 
 rename_mappings:
   google:
@@ -16,6 +17,13 @@ rename_mappings:
     Review Created (UTC): date_created
     Review Content: review
     Review Stars: score
+
+schema:
+  source: string
+  location: string
+  date_created: datetime
+  review: string
+  score: int64
 
 filters:
   low_rating_max: 3
