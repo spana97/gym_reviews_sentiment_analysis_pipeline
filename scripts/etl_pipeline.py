@@ -18,19 +18,20 @@ def run_etl_pipeline():
     config = load_config()
 
     # Extract
-    google_raw = extract(config['data']['raw_google'])
-    trust_raw = extract(config['data']['raw_trustpilot'])
+    google_raw = extract(config["data"]["raw_google"])
+    trust_raw = extract(config["data"]["raw_trustpilot"])
 
     # Transform
-    google_clean = transform(google_raw, 'google', config)
-    trustpilot_clean = transform(trust_raw, 'trustpilot', config)
+    google_clean = transform(google_raw, "google", config)
+    trustpilot_clean = transform(trust_raw, "trustpilot", config)
 
     combined = combine_datasets([google_clean, trustpilot_clean])
 
     # Load
-    load(combined, config['data']['processed_output'])
+    load(combined, config["data"]["processed_output"])
 
-    print('ETL pipeline finished successfully')
+    print("ETL pipeline finished successfully")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     run_etl_pipeline()

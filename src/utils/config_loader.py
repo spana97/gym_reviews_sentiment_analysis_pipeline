@@ -1,6 +1,7 @@
 import yaml
 from pathlib import Path
 
+
 def load_config(path: str = "config/config.yaml") -> dict:
     """Load YAML config file and return as a dictionary."""
     config_path = Path(path)
