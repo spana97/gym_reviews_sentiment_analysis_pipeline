@@ -2,7 +2,9 @@ from typing import List
 
 import pandas as pd
 
-# Transform helpers
+# -----------------------------
+# transform helpers
+# -----------------------------
 
 
 def rename_and_select(df: pd.DataFrame, mappings: dict) -> pd.DataFrame:
@@ -38,7 +40,9 @@ def filter_rows(df: pd.DataFrame, max_score: int) -> pd.DataFrame:
     return df[df["score"] <= max_score].copy()
 
 
-# Pipeline helpers
+# -----------------------------
+# run_etl_pipeline helper
+# -----------------------------
 
 
 def combine_datasets(dfs: List[pd.DataFrame]) -> pd.DataFrame:

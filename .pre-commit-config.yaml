@@ -6,8 +6,8 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: debug-statements
-      # - id: double-quote-string-fixer
       - id: name-tests-test
+        args: [--pytest-test-first]
       - id: requirements-txt-fixer
   - repo: https://github.com/psf/black
     rev: 26.1.0
@@ -16,7 +16,7 @@ repos:
         language_version: python3
         args: ["--line-length=88"]
   - repo: https://github.com/pycqa/isort
-    rev: 7.0.0
+    rev: 8.0.0
     hooks:
       - id: isort
         args: ["--profile", "black"]

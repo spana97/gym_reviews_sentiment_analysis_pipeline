@@ -1,4 +1,4 @@
-from src.preprocessing.helpers import remove_stopwords
+from src.text_preprocessing.helpers import remove_stopwords
 
 
 def test_remove_stopwords():
