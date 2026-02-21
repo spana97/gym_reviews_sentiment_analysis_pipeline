@@ -2,11 +2,11 @@ import os
 
 import pandas as pd
 
+from configtest import TEST_CONFIG
 from src.etl.extract import extract
 from src.etl.helpers import combine_datasets
 from src.etl.load import load
 from src.etl.transform import transform
-from tests.config_test import TEST_CONFIG
 
 
 def test_run_etl_pipeline(tmp_path):

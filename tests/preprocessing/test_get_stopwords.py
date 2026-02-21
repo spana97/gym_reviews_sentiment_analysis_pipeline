@@ -1,4 +1,4 @@
-from src.preprocessing.helpers import get_stopwords
+from src.text_preprocessing.helpers import get_stopwords
 
 
 def test_get_stopwords():
