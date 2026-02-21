@@ -34,7 +34,7 @@ class TextPreprocessor:
         self.stop_words = get_stopwords(extra_stop_words)
         self.lemmatizer = WordNetLemmatizer()
 
-    def preprocess(self, text: str) -> list[str]:
+    def preprocess(self, text: str) -> str:
         """
         Preprocess the input text by:
         1. Cleaning the text
@@ -47,4 +47,4 @@ class TextPreprocessor:
         filtered_tokens = remove_stopwords(tokens, self.stop_words)
         lemmas = lemmatize_tokens(filtered_tokens, self.lemmatizer)
 
-        return lemmas
+        return " ".join(lemmas)
