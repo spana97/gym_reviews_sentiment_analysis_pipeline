@@ -1,8 +1,9 @@
-from src.etl.extract import extract
-from src.etl.helpers import combine_datasets
-from src.etl.load import load
-from src.etl.transform import transform
 from src.utils.config_loader import load_config
+
+from .extract import extract
+from .helpers import combine_datasets
+from .load import load
+from .transform import transform
 
 
 def run_etl_pipeline():
@@ -30,7 +31,3 @@ def run_etl_pipeline():
     load(combined, config["data"]["processed_output"])
 
     print("ETL pipeline finished successfully")
-
-
-if __name__ == "__main__":
-    run_etl_pipeline()
