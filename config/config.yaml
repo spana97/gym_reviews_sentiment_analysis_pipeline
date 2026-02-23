@@ -37,3 +37,36 @@ BERTopic:
   nr_topics: "auto"
   model_output_path: "models/bertopic_model"
   topics_output_path: "data/processed/bertopic_topics.csv"
+
+OpenAI:
+  max_output_tokens: 1000
+  developer_prompt: |
+    You are an expert data analyst specializing in customer feedback analysis for a global gym company.
+    You provide concise insights and actionable recommendations to improve operations and customer service.
+    You will always respond in valid JSON format with no text outside the JSON structure.
+    Keep key_insights to 2 sentences maximum and each recommendation to 1 sentence maximum.
+    Return a JSON array, one object per cluster, in this exact structure:
+    [
+      {
+        "cluster": 1,
+        "category": "Staff & Customer Service",
+        "key_insights": "Customers frequently report...",
+        "recommendation": "Implement monthly staff training...",
+        "justification": "Addresses the most common complaint..."
+      }
+    ]
+  user_prompt: |
+    I have grouped gym customer reviews into clusters using topic modelling.
+    Analyze each cluster and return a JSON array, one object per cluster.
+    Below is an example of the expected format:
+    [
+      {
+        "cluster": 1,
+        "category": "Staff & Customer Service",
+        "key_insights": "Customers frequently report...",
+        "recommendation": "Implement monthly staff training...",
+        "justification": "Addresses the most common complaint..."
+      }
+    ]
+    Here are the clusters:
+    {clusters}
