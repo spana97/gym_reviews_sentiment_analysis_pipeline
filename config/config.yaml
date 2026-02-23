@@ -27,3 +27,13 @@ schema:
 
 filters:
   low_rating_max: 3
+
+BERTopic:
+  language: English
+  calculate_probabilities: False
+  verbose: False
+  embed_model: "all-MiniLM-L6-v2"
+  low_memory: True
+  nr_topics: "auto"
+  model_output_path: "models/bertopic_model"
+  topics_output_path: "data/processed/bertopic_topics.csv"
