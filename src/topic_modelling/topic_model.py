@@ -22,7 +22,7 @@ class TopicModel:
         )
         print("BERTopic model initialized successfully.")
 
-    def fit_transform(self, documents: list):
+    def fit(self, documents: list):
         """
         Fit the BERTopic model to the documents.
         Returns the topics and probabilities.
@@ -49,5 +49,5 @@ class TopicModel:
         self.topic_model = BERTopic.load(path)
         print(f"BERTopic model loaded successfully from {path}.")
 
-    def get_topic_model(self):
-        return self.topic_model
+    def get_topic_info(self):
+        return self.topic_model.get_topic_info()

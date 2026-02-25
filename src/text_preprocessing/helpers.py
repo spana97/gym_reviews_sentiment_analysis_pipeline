@@ -1,9 +1,18 @@
 import re
+import ssl
 from typing import Optional, Set
 
-from nltk import pos_tag
-from nltk.corpus import stopwords, wordnet
-from nltk.tokenize import word_tokenize
+import nltk
+
+ssl._create_default_https_context = ssl._create_unverified_context  # type: ignore[assignment] # noqa: E501
+nltk.download("wordnet", quiet=True)
+nltk.download("stopwords", quiet=True)
+nltk.download("averaged_perceptron_tagger_eng", quiet=True)
+nltk.download("punkt_tab", quiet=True)
+
+from nltk import pos_tag  # noqa: E402
+from nltk.corpus import stopwords, wordnet  # noqa: E402
+from nltk.tokenize import word_tokenize  # noqa: E402
 
 
 # -----------------------------
