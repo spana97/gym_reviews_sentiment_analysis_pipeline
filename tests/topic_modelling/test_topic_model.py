@@ -25,19 +25,22 @@ def mock_config():
 
 @pytest.fixture
 def topic_model(mock_config):
-    with (
-        patch(BERTOPIC_PATH) as mock_bertopic,
-        patch(ST_PATH),
-    ):
-        instance = mock_bertopic.return_value
+    with patch(BERTOPIC_PATH) as mock_bertopic, patch(ST_PATH) as mock_st:
+
+        mock_bertopic_instance = mock_bertopic.return_value
+        mock_st_instance = mock_st.return_value
+
         model = TopicModel(mock_config)
-        model._mock_bertopic_instance = instance
+
+        model._mock_bertopic_instance = mock_bertopic_instance
+        model._mock_st_instance = mock_st_instance
         yield model
 
 
 def test_init(mock_config):
     with patch(BERTOPIC_PATH) as mock_bertopic, patch(ST_PATH) as mock_st:
         TopicModel(mock_config)
+        mock_st.assert_called_once_with(mock_config["embed_model"])
         mock_bertopic.assert_called_once_with(
             language=mock_config["language"],
             calculate_probabilities=mock_config["calculate_probabilities"],
@@ -46,31 +49,31 @@ def test_init(mock_config):
             low_memory=mock_config["low_memory"],
             nr_topics=mock_config["nr_topics"],
         )
-        mock_st.assert_called_once_with(mock_config["embed_model"])
 
 
 def test_fit_transform(topic_model):
     documents = ["doc one", "doc two", "doc three"]
     expected_topics = [0, 1, 0]
     expected_probs = [0.9, 0.8, 0.7]
-    topic_model.topic_model.fit_transform.return_value = (
+
+    topic_model._mock_bertopic_instance.fit_transform.return_value = (
         expected_topics,
         expected_probs,
     )
 
-    topics, probs = topic_model.fit_transform(documents)
+    topics, probs = topic_model.fit(documents)
 
-    topic_model.topic_model.fit_transform.assert_called_once_with(documents)
+    topic_model._mock_bertopic_instance.fit_transform.assert_called_once_with(
+        documents
+    )  # noqa: E501
     assert topics == expected_topics
     assert probs == expected_probs
 
 
 def test_save(topic_model, tmp_path):
     save_path = str(tmp_path / "models" / "my_model")
-
     topic_model.save(save_path)
-
-    topic_model.topic_model.save.assert_called_once_with(save_path)
+    topic_model._mock_bertopic_instance.save.assert_called_once_with(save_path)
 
 
 def test_load(topic_model):
@@ -81,6 +84,8 @@ def test_load(topic_model):
         mock_load.assert_called_once_with(load_path)
 
 
-def test_get_topic_model(topic_model):
-    result = topic_model.get_topic_model()
-    assert result is topic_model.topic_model
+def test_get_topic_info(topic_model):
+
+    result = topic_model.get_topic_info()
+    topic_model._mock_bertopic_instance.get_topic_info.assert_called_once()
+    assert result == topic_model._mock_bertopic_instance.get_topic_info()
