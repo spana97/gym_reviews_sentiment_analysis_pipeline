@@ -2,9 +2,16 @@ import re
 import ssl
 from typing import Optional, Set
 
+import certifi
 import nltk
 
-ssl._create_default_https_context = ssl._create_unverified_context  # type: ignore[assignment] # noqa: E501
+
+def _create_ssl_context() -> ssl.SSLContext:
+    return ssl.create_default_context(cafile=certifi.where())
+
+
+ssl._create_default_https_context = _create_ssl_context  # type: ignore[assignment]  # noqa: E501
+
 nltk.download("wordnet", quiet=True)
 nltk.download("stopwords", quiet=True)
 nltk.download("averaged_perceptron_tagger_eng", quiet=True)
