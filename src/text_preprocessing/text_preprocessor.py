@@ -23,6 +23,7 @@ class TextPreprocessor:
         ensure_nltk_resources()
         self.stop_words = get_stopwords(extra_stop_words)
         self.lemmatizer = WordNetLemmatizer()
+        logger.info("TextPreprocessor initialized successfully.")
 
     def preprocess(self, text: str) -> str:
         """
