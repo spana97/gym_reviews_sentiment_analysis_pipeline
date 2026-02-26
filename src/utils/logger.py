@@ -6,9 +6,7 @@ def setup_logger():
     logger.setLevel(logging.DEBUG)
 
     # Formatters
-    file_formatter = logging.Formatter(
-        "%(asctime)s - %(levelname)s - %(message)s"
-    )  # noqa: E501
+    file_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")  # noqa: E501
     console_formatter = logging.Formatter("%(levelname)s - %(message)s")
 
     # Handlers

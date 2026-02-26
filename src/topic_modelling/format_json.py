@@ -14,7 +14,7 @@ def format_json(topic_info):
         logger.error(f"Error converting topic information to list: {e}")
         return None
 
-    clusters = {f"cluster_{i+1}": docs for i, docs in enumerate(topics_docs)}
+    clusters = {f"cluster_{i + 1}": docs for i, docs in enumerate(topics_docs)}
 
     try:
         formatted_input = json.dumps(clusters, indent=2)

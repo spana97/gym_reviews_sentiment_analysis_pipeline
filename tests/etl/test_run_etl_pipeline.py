@@ -31,30 +31,29 @@ def test_run_etl_pipeline(tmp_path):
 
     assert not combined.empty, "Combined DataFrame should not be empty"
     assert len(combined) == 6, "Combined DataFrame should have 6 rows"
-    assert (
-        combined.columns.tolist() == expected_columns
-    ), f"Combined DataFrame should have correct columns: {expected_columns}"
-    assert combined["score"].dtype == "int64", "Score column should be an int"
-    assert (
-        combined["review"].dtype == "string"
-    ), "Review column should be of string type"
-    assert pd.api.types.is_datetime64_any_dtype(
-        combined["date_created"]
-    ), "Date column should be of datetime type"
-    assert all(
-        combined["score"] <= TEST_CONFIG["filters"]["low_rating_max"]
-    ), "All scores should be <= low_rating_max after filtering"
-    assert (combined["review"].isnull().sum() == 0).all(), (
-        "There should be no null values in the review "
-        "column of the combined DataFrame"
+    assert combined.columns.tolist() == expected_columns, (
+        f"Combined DataFrame should have correct columns: {expected_columns}"
     )
-    assert (
-        combined.duplicated().sum() == 0
-    ), "There should be no duplicate rows in the combined DataFrame"
+    assert combined["score"].dtype == "int64", "Score column should be an int"
+    assert combined["review"].dtype == "string", (
+        "Review column should be of string type"
+    )
+    assert pd.api.types.is_datetime64_any_dtype(combined["date_created"]), (
+        "Date column should be of datetime type"
+    )
+    assert all(combined["score"] <= TEST_CONFIG["filters"]["low_rating_max"]), (
+        "All scores should be <= low_rating_max after filtering"
+    )
+    assert (combined["review"].isnull().sum() == 0).all(), (
+        "There should be no null values in the review column of the combined DataFrame"
+    )
+    assert combined.duplicated().sum() == 0, (
+        "There should be no duplicate rows in the combined DataFrame"
+    )
     assert os.path.exists(output_path), "Output file should be created"
 
     saved_df = pd.read_parquet(output_path)
 
-    assert (
-        saved_df.shape == combined.shape
-    ), "Saved DataFrame should have the same shape as the combined DataFrame"
+    assert saved_df.shape == combined.shape, (
+        "Saved DataFrame should have the same shape as the combined DataFrame"
+    )
