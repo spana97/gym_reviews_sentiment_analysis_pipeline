@@ -19,20 +19,39 @@ def run_etl_pipeline():
     config = load_config()
 
     # Extract
-    logger.info("Extracting raw datasets")
-    google_raw = extract(config["data"]["raw_google"])
-    trust_raw = extract(config["data"]["raw_trustpilot"])
+    try:
+        google_raw = extract(config["data"]["raw_google"])
+        trust_raw = extract(config["data"]["raw_trustpilot"])
+    except Exception as e:
+        logger.error(f"Error extracting raw datasets: {e}")
+        raise
+    logger.info("Datasets extracted successfully")
 
     # Transform
-    logger.info("Transforming datasets")
-    google_clean = transform(google_raw, "google", config)
-    trustpilot_clean = transform(trust_raw, "trustpilot", config)
+    try:
+        logger.info("Transforming datasets")
+        google_clean = transform(google_raw, "google", config)
+        trustpilot_clean = transform(trust_raw, "trustpilot", config)
+    except Exception as e:
+        logger.error(f"Error transforming datasets: {e}")
+        raise
+    logger.info("Datasets transformed successfully")
 
-    logger.info("Combining datasets")
-    combined = combine_datasets([google_clean, trustpilot_clean])
+    # Combine datasets
+    try:
+        logger.info("Combining datasets")
+        combined = combine_datasets([google_clean, trustpilot_clean])
+    except Exception as e:
+        logger.error(f"Error combining datasets: {e}")
+        raise
+    logger.info("Datasets combined successfully")
 
     # Load
-    logger.info("Loading combined dataset")
-    load(combined, config["data"]["processed_output"])
+    try:
+        logger.info("Loading combined dataset")
+        load(combined, config["data"]["processed_output"])
+    except Exception as e:
+        logger.error(f"Error loading combined dataset: {e}")
+        raise
 
     logger.info("ETL pipeline completed successfully")
