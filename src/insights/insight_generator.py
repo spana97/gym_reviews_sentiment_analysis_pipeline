@@ -1,5 +1,7 @@
 from openai import OpenAI
 
+from src.utils.logger import logger
+
 
 class InsightGenerator:
     """
@@ -10,13 +12,24 @@ class InsightGenerator:
         """
         Initializes the InsightGenerator with configuration and API details.
         """
-        print("Initializing InsightGenerator with model:", model)
+        logger.info(f"Initializing InsightGenerator with model: {model}")
         self.config = config
-        self.client = OpenAI(api_key=api_key)
         self.model = model
-        self.developer_prompt = config["developer_prompt"]
-        self.user_prompt = config["user_prompt"]
-        print("Model initialized successfully.")
+
+        try:
+            self.client = OpenAI(api_key=api_key)
+        except Exception as e:
+            logger.error(f"Error initializing OpenAI client: {e}")
+            raise
+
+        try:
+            self.developer_prompt = config["developer_prompt"]
+            self.user_prompt = config["user_prompt"]
+        except KeyError as e:
+            logger.error(f"Missing prompt in configuration: {e}")
+            raise
+
+        logger.info("Model initialized successfully.")
 
     def _build_user_prompt(self, formatted_clusters: str) -> str:
         """
@@ -29,15 +42,21 @@ class InsightGenerator:
         """
         Generates insights based on the formatted clusters.
         """
-        print("Generating insights with formatted clusters")
+        logger.info("Generating insights with formatted clusters")
         user_prompt = self._build_user_prompt(formatted_clusters)
-        response = self.client.responses.create(
-            model=self.model,
-            input=[
-                {"role": "developer", "content": self.developer_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            max_output_tokens=self.config["max_output_tokens"],
-        )
-        print("Insights generated successfully.")
+
+        try:
+            response = self.client.responses.create(
+                model=self.model,
+                input=[
+                    {"role": "developer", "content": self.developer_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                max_output_tokens=self.config["max_output_tokens"],
+            )
+        except Exception as e:
+            logger.error(f"Error generating insights: {e}")
+            raise
+
+        logger.info("Insights generated successfully.")
         return response.output_text
