@@ -1,28 +1,16 @@
 from typing import Optional, Set
 
-import nltk
 from nltk.stem import WordNetLemmatizer
 
-from .helpers import (
+from src.text_preprocessing.helpers import (
     clean_text,
+    ensure_nltk_resources,
     get_stopwords,
     lemmatize_tokens,
     remove_stopwords,
     tokenize_text,
 )
-
-REQUIRED_RESOURCES = [
-    ("corpora", "stopwords"),
-    ("tokenizers", "punkt"),
-    ("corpora", "wordnet"),
-    ("taggers", "averaged_perceptron_tagger"),
-]
-
-for resource_type, resource_name in REQUIRED_RESOURCES:
-    try:
-        nltk.data.find(f"{resource_type}/{resource_name}")
-    except LookupError:
-        nltk.download(resource_name, quiet=True)
+from src.utils.logger import logger
 
 
 class TextPreprocessor:
@@ -31,8 +19,11 @@ class TextPreprocessor:
     """
 
     def __init__(self, extra_stop_words: Optional[Set[str]] = None):
+        logger.info("Initializing TextPreprocessor...")
+        ensure_nltk_resources()
         self.stop_words = get_stopwords(extra_stop_words)
         self.lemmatizer = WordNetLemmatizer()
+        logger.info("TextPreprocessor initialized successfully.")
 
     def preprocess(self, text: str) -> str:
         """
@@ -42,9 +33,13 @@ class TextPreprocessor:
         3. Removing stopwords
         4. Lemmatizing the tokens
         """
-        cleaned_text = clean_text(text)
-        tokens = tokenize_text(cleaned_text)
-        filtered_tokens = remove_stopwords(tokens, self.stop_words)
-        lemmas = lemmatize_tokens(filtered_tokens, self.lemmatizer)
+        try:
+            cleaned_text = clean_text(text)
+            tokens = tokenize_text(cleaned_text)
+            filtered_tokens = remove_stopwords(tokens, self.stop_words)
+            lemmas = lemmatize_tokens(filtered_tokens, self.lemmatizer)
+        except Exception as e:
+            logger.error(f"Error preprocessing text: {text} - {e}")
+            return ""
 
         return " ".join(lemmas)

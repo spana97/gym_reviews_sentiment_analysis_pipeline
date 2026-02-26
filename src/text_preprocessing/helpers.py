@@ -2,9 +2,18 @@ import re
 import ssl
 from typing import Optional, Set
 
+import certifi
 import nltk
 
-ssl._create_default_https_context = ssl._create_unverified_context  # type: ignore[assignment] # noqa: E501
+from src.utils.logger import logger
+
+
+def _create_ssl_context() -> ssl.SSLContext:
+    return ssl.create_default_context(cafile=certifi.where())
+
+
+ssl._create_default_https_context = _create_ssl_context  # type: ignore[assignment]  # noqa: E501
+
 nltk.download("wordnet", quiet=True)
 nltk.download("stopwords", quiet=True)
 nltk.download("averaged_perceptron_tagger_eng", quiet=True)
@@ -26,11 +35,14 @@ def clean_text(text: str) -> str:
     3. Removing numbers
     4. Removing extra whitespace
     """
-    text = text.lower()
-    text = re.sub(r"[^\w\s]", " ", text)
-    text = re.sub(r"\d+", "", text)
-    text = re.sub(r"\s+", " ", text).strip()
-
+    try:
+        text = text.lower()
+        text = re.sub(r"[^\w\s]", " ", text)
+        text = re.sub(r"\d+", "", text)
+        text = re.sub(r"\s+", " ", text).strip()
+    except Exception as e:
+        logger.error(f"Error cleaning text: {text} - {e}")
+        return ""
     return text
 
 
@@ -43,8 +55,13 @@ def tokenize_text(text: str) -> list:
     """
     Tokenize the input text.
     """
-    tokens = word_tokenize(text)
-    tokens = [token for token in tokens if token.isalpha()]
+    try:
+        tokens = word_tokenize(text)
+        tokens = [token for token in tokens if token.isalpha()]
+    except Exception as e:
+        logger.error(f"Error tokenizing text: {text} - {e}")
+        tokens = []
+
     return tokens
 
 
@@ -106,3 +123,22 @@ def lemmatize_tokens(tokens: list, lemmatizer) -> list:
     """
     tagged = pos_tag(tokens)
     return [lemmatizer.lemmatize(word, _map_pos(tag)) for word, tag in tagged]
+
+
+# -----------------------------
+# Ensure NLTK resources
+# -----------------------------
+
+
+def ensure_nltk_resources() -> None:
+    required_resources = [
+        ("corpora", "stopwords"),
+        ("tokenizers", "punkt"),
+        ("corpora", "wordnet"),
+        ("taggers", "averaged_perceptron_tagger"),
+    ]
+    for resource_type, resource_name in required_resources:
+        try:
+            nltk.data.find(f"{resource_type}/{resource_name}")
+        except LookupError:
+            nltk.download(resource_name, quiet=True)
