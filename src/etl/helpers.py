@@ -42,9 +42,7 @@ def cast_types(df: pd.DataFrame, schema: dict) -> pd.DataFrame:
                 df[col] = df[col].astype(dtype, errors="ignore")
 
         except Exception as e:
-            logger.error(
-                f"Error casting column '{col}' to type '{dtype}': {e}"
-            )  # noqa: E501
+            logger.error(f"Error casting column '{col}' to type '{dtype}': {e}")  # noqa: E501
             raise
 
     logger.debug("Finished casting columns")
@@ -66,14 +64,10 @@ def filter_rows(df: pd.DataFrame, max_score: int) -> pd.DataFrame:
     df = df[df["score"] <= max_score].copy()
     after = len(df)
 
-    logger.info(
-        f"Filtered rows with score <= {max_score}: {before} -> {after} rows"
-    )  # noqa: E501
+    logger.info(f"Filtered rows with score <= {max_score}: {before} -> {after} rows")  # noqa: E501
 
     if after == 0:
-        logger.warning(
-            f"No rows left after filtering with max_score={max_score}"
-        )  # noqa: E501
+        logger.warning(f"No rows left after filtering with max_score={max_score}")  # noqa: E501
 
     return df
 

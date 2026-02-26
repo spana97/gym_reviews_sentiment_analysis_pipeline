@@ -2,20 +2,19 @@ import os
 
 import pandas as pd
 
-from configtest import TEST_CONFIG
 from src.etl.extract import extract
 from src.etl.helpers import combine_datasets
 from src.etl.load import load
 from src.etl.transform import transform
 
 
-def test_run_etl_pipeline(tmp_path):
+def test_run_etl_pipeline(tmp_path, test_config, google_test_df, trustpilot_test_df):
 
-    google_test_df = extract(TEST_CONFIG["data"]["test_google"])
-    trustpilot_test_df = extract(TEST_CONFIG["data"]["test_trustpilot"])
+    google_test_df = extract(test_config["data"]["test_google"])
+    trustpilot_test_df = extract(test_config["data"]["test_trustpilot"])
 
-    google_clean = transform(google_test_df, "google", TEST_CONFIG)
-    trustpilot_clean = transform(trustpilot_test_df, "trustpilot", TEST_CONFIG)
+    google_clean = transform(google_test_df, "google", test_config)
+    trustpilot_clean = transform(trustpilot_test_df, "trustpilot", test_config)
     combined = combine_datasets([google_clean, trustpilot_clean])
 
     output_path = tmp_path / "combined_test.parquet"
@@ -31,30 +30,29 @@ def test_run_etl_pipeline(tmp_path):
 
     assert not combined.empty, "Combined DataFrame should not be empty"
     assert len(combined) == 6, "Combined DataFrame should have 6 rows"
-    assert (
-        combined.columns.tolist() == expected_columns
-    ), f"Combined DataFrame should have correct columns: {expected_columns}"
-    assert combined["score"].dtype == "int64", "Score column should be an int"
-    assert (
-        combined["review"].dtype == "string"
-    ), "Review column should be of string type"
-    assert pd.api.types.is_datetime64_any_dtype(
-        combined["date_created"]
-    ), "Date column should be of datetime type"
-    assert all(
-        combined["score"] <= TEST_CONFIG["filters"]["low_rating_max"]
-    ), "All scores should be <= low_rating_max after filtering"
-    assert (combined["review"].isnull().sum() == 0).all(), (
-        "There should be no null values in the review "
-        "column of the combined DataFrame"
+    assert combined.columns.tolist() == expected_columns, (
+        f"Combined DataFrame should have correct columns: {expected_columns}"
     )
-    assert (
-        combined.duplicated().sum() == 0
-    ), "There should be no duplicate rows in the combined DataFrame"
+    assert combined["score"].dtype == "int64", "Score column should be an int"
+    assert combined["review"].dtype == "string", (
+        "Review column should be of string type"
+    )
+    assert pd.api.types.is_datetime64_any_dtype(combined["date_created"]), (
+        "Date column should be of datetime type"
+    )
+    assert all(combined["score"] <= test_config["filters"]["low_rating_max"]), (
+        "All scores should be <= low_rating_max after filtering"
+    )
+    assert (combined["review"].isnull().sum() == 0).all(), (
+        "There should be no null values in the review column of the combined DataFrame"
+    )
+    assert combined.duplicated().sum() == 0, (
+        "There should be no duplicate rows in the combined DataFrame"
+    )
     assert os.path.exists(output_path), "Output file should be created"
 
     saved_df = pd.read_parquet(output_path)
 
-    assert (
-        saved_df.shape == combined.shape
-    ), "Saved DataFrame should have the same shape as the combined DataFrame"
+    assert saved_df.shape == combined.shape, (
+        "Saved DataFrame should have the same shape as the combined DataFrame"
+    )

@@ -9,21 +9,21 @@ repos:
       - id: name-tests-test
         args: [--pytest-test-first]
       - id: requirements-txt-fixer
-  - repo: https://github.com/psf/black
-    rev: 26.1.0
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: no-commit-to-branch
+        args: ["--branch", "main"]
+  -   repo: https://github.com/Yelp/detect-secrets
+      rev: v1.5.0
+      hooks:
+      -   id: detect-secrets
+          args: ['--baseline', '.secrets.baseline']
+          exclude: package.lock.json
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.3
     hooks:
-      - id: black
-        language_version: python3
-        args: ["--line-length=88"]
-  - repo: https://github.com/pycqa/isort
-    rev: 8.0.0
-    hooks:
-      - id: isort
-        args: ["--profile", "black"]
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.3.0
-    hooks:
-      - id: flake8
+      - id: ruff-check
+      - id: ruff-format
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.19.1
     hooks:

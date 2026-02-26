@@ -12,9 +12,7 @@ def transform(df: pd.DataFrame, source: str, config: dict) -> pd.DataFrame:
 
     mappings = config["rename_mappings"].get(source)
     if not mappings:
-        logger.error(
-            f'No rename mappings defined for source "{source}"', exc_info=True
-        )  # noqa: E501
+        logger.error(f'No rename mappings defined for source "{source}"', exc_info=True)  # noqa: E501
         raise ValueError(f'No mappings defined for source "{source}"')
 
     schema = config.get("schema")
@@ -41,9 +39,7 @@ def transform(df: pd.DataFrame, source: str, config: dict) -> pd.DataFrame:
             f"Column 'review' not found in DataFrame after rename for source {source}",  # noqa: E501
             exc_info=True,
         )
-        raise ValueError(
-            f"Column 'review' not found in DataFrame for source {source}"
-        )  # noqa: E501
+        raise ValueError(f"Column 'review' not found in DataFrame for source {source}")  # noqa: E501
 
     df = df.dropna(subset=["review"])
 

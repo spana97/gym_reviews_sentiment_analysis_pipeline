@@ -26,7 +26,6 @@ def mock_config():
 @pytest.fixture
 def topic_model(mock_config):
     with patch(BERTOPIC_PATH) as mock_bertopic, patch(ST_PATH) as mock_st:
-
         mock_bertopic_instance = mock_bertopic.return_value
         mock_st_instance = mock_st.return_value
 
@@ -63,9 +62,7 @@ def test_fit_transform(topic_model):
 
     topics, probs = topic_model.fit(documents)
 
-    topic_model._mock_bertopic_instance.fit_transform.assert_called_once_with(
-        documents
-    )  # noqa: E501
+    topic_model._mock_bertopic_instance.fit_transform.assert_called_once_with(documents)  # noqa: E501
     assert topics == expected_topics
     assert probs == expected_probs
 

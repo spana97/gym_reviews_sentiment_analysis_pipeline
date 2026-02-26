@@ -9,9 +9,7 @@ def extract(path: str) -> pd.DataFrame:
     """
     try:
         df = pd.read_csv(path)
-        logger.info(
-            f"Loaded {path}: {df.shape[0]} rows, {df.shape[1]} columns"
-        )  # noqa: E501
+        logger.info(f"Loaded {path}: {df.shape[0]} rows, {df.shape[1]} columns")  # noqa: E501
         return df
     except FileNotFoundError:
         logger.error(f"File not found: {path}", exc_info=True)
