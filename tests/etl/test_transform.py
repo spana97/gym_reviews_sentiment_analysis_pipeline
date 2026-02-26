@@ -1,12 +1,11 @@
 import pandas as pd
 
-from configtest import GOOGLE_TEST_DF, TEST_CONFIG, TRUSTPILOT_TEST_DF
 from src.etl.transform import transform
 
 
-def test_transform_google():
+def test_transform_google(google_test_df, test_config):
 
-    result = transform(GOOGLE_TEST_DF.copy(), "google", TEST_CONFIG)
+    result = transform(google_test_df.copy(), "google", test_config)
 
     assert result.shape == (
         2,
@@ -40,13 +39,13 @@ def test_transform_google():
     )
 
 
-def test_transform_trustpilot():
-    result = transform(TRUSTPILOT_TEST_DF.copy(), "trustpilot", TEST_CONFIG)
+def test_transform_trustpilot(trustpilot_test_df, test_config):
+    result = transform(trustpilot_test_df.copy(), "trustpilot", test_config)
 
     assert result.shape == (
         3,
         5,
-    ), "Transformed DataFrame should have 3 rows and 6 columns"
+    ), "Transformed DataFrame should have 3 rows and 5 columns"
     assert list(result["score"]) == [
         1,
         3,
