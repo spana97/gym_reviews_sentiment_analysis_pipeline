@@ -4,9 +4,7 @@ from utils.logger import logger
 
 
 def extract(path: str) -> pd.DataFrame:
-    """
-    Load CSV into a DataFrame
-    """
+    """Load CSV into a DataFrame."""
     try:
         df = pd.read_csv(path)
         logger.info(f"Loaded {path}: {df.shape[0]} rows, {df.shape[1]} columns")  # noqa: E501

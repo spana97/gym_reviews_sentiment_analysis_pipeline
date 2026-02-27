@@ -6,9 +6,7 @@ from utils.logger import logger
 
 
 def parse_insights(raw_response: str) -> pd.DataFrame:
-    """
-    Parses the response from the OpenAI API and converts it into a DataFrame.
-    """
+    """Parses the response from the OpenAI API and converts it into a DataFrame."""
     logger.info("Parsing insights from raw response.")
 
     try:

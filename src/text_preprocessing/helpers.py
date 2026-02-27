@@ -1,6 +1,6 @@
+from nltk.stem import WordNetLemmatizer
 import re
 import ssl
-from typing import Optional, Set
 
 import certifi
 import nltk
@@ -28,13 +28,7 @@ from nltk.tokenize import word_tokenize  # noqa: E402
 # Text cleaning
 # -----------------------------
 def clean_text(text: str) -> str:
-    """
-    Clean the input text by:
-    1. Converting to lowercase
-    2. Removing punctuation
-    3. Removing numbers
-    4. Removing extra whitespace
-    """
+    """Lowercase, remove punctuation, numbers and extra whitespace."""
     try:
         text = text.lower()
         text = re.sub(r"[^\w\s]", " ", text)
@@ -52,9 +46,7 @@ def clean_text(text: str) -> str:
 
 
 def tokenize_text(text: str) -> list:
-    """
-    Tokenize the input text.
-    """
+    """Tokenizes the input text."""
     try:
         tokens = word_tokenize(text)
         tokens = [token for token in tokens if token.isalpha()]
@@ -70,10 +62,8 @@ def tokenize_text(text: str) -> list:
 # -----------------------------
 
 
-def get_stopwords(extra_words: Optional[Set[str]] = None) -> Set[str]:
-    """
-    Returns a set of English stopwords with optional extra words.
-    """
+def get_stopwords(extra_words: set[str] | None = None) -> set[str]:
+    """Returns a set of English stopwords with optional extra words."""
     stop_words = set(stopwords.words("english"))
     if extra_words:
         stop_words.update(extra_words)
@@ -85,10 +75,8 @@ def get_stopwords(extra_words: Optional[Set[str]] = None) -> Set[str]:
 # -----------------------------
 
 
-def remove_stopwords(tokens: list, stop_words: Set[str]) -> list:
-    """
-    Remove stopwords from the list of tokens.
-    """
+def remove_stopwords(tokens: list, stop_words: set[str]) -> list:
+    """Remove stopwords from a list of tokens."""
     filtered_tokens = [token for token in tokens if token not in stop_words]
     return filtered_tokens
 
@@ -99,10 +87,7 @@ def remove_stopwords(tokens: list, stop_words: Set[str]) -> list:
 
 
 def _map_pos(tag: str) -> str:
-    """
-    Internal helper function.
-    Maps NLTK POS tags to WordNet POS tags for lemmatization.
-    """
+    """Maps NLTK POS tags to WordNet POS tags for lemmatization."""
     tag_dict = {
         "J": wordnet.ADJ,
         "N": wordnet.NOUN,
@@ -117,10 +102,8 @@ def _map_pos(tag: str) -> str:
 # -----------------------------
 
 
-def lemmatize_tokens(tokens: list, lemmatizer) -> list:
-    """
-    Lemmatize the input tokens using POS tagging.
-    """
+def lemmatize_tokens(tokens: list, lemmatizer: WordNetLemmatizer) -> list[str]:
+    """Lemmatize input tokens using POS tagging."""
     tagged = pos_tag(tokens)
     return [lemmatizer.lemmatize(word, _map_pos(tag)) for word, tag in tagged]
 
@@ -131,6 +114,7 @@ def lemmatize_tokens(tokens: list, lemmatizer) -> list:
 
 
 def ensure_nltk_resources() -> None:
+    """Checks whether NLTK resources are downloaded and download if required."""
     required_resources = [
         ("corpora", "stopwords"),
         ("tokenizers", "punkt"),

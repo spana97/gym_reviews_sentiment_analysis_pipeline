@@ -1,11 +1,19 @@
 import json
+import pandas as pd
 
 from utils.logger import logger
 
 
-def format_json(topic_info):
+def format_json(topic_info: pd.Series) -> str | None:
     """
-    Format the topic modelling information from BERTopic into a JSON structure.
+    Format BERTopic topic information into a JSON structure.
+
+    Args:
+        topic_info (pd.Series): Representative documents for each topic.
+
+    Returns:
+        str | None: JSON string of the form {"cluster_1": [...], "cluster_2": [...]}
+            Returns None if formatting fails.
     """
     logger.info("Formatting topic information into JSON structure...")
     try:

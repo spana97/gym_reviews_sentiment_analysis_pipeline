@@ -5,9 +5,7 @@ from utils.logger import logger
 
 
 def transform(df: pd.DataFrame, source: str, config: dict) -> pd.DataFrame:
-    """
-    Transform raw input DataFrame into clean standardized format.
-    """
+    """Transform raw input DataFrame into clean standardized format."""
     logger.info(f"Transforming data from source: {source}")
 
     mappings = config["rename_mappings"].get(source)
