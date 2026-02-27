@@ -7,10 +7,8 @@ def test_get_stopwords():
     extra = ["gym", "workout"]
     stopwords_with_extra = get_stopwords(extra)
 
-    assert "the" in stopwords, "'the' should be in the default stopwords set"
-    assert "gym" in stopwords_with_extra, (
-        "'gym' should be in the custom stopwords set when added"
-    )
+    assert "the" in stopwords
+    assert "gym" in stopwords_with_extra
     assert "workout" in stopwords_with_extra, (
         "'workout' should be in the custom stopwords set when added"
     )

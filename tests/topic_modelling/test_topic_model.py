@@ -62,7 +62,7 @@ def test_fit_transform(topic_model):
 
     topics, probs = topic_model.fit(documents)
 
-    topic_model._mock_bertopic_instance.fit_transform.assert_called_once_with(documents)  # noqa: E501
+    topic_model._mock_bertopic_instance.fit_transform.assert_called_once_with(documents)
     assert topics == expected_topics
     assert probs == expected_probs
 

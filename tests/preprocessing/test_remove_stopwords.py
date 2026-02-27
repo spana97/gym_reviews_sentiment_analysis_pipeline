@@ -6,9 +6,8 @@ def test_remove_stopwords():
     stop_words = {"is", "a"}
 
     filtered_tokens = remove_stopwords(tokens, stop_words)
+    expected_tokens = ["this", "test", "sentence"]
 
-    assert "this" in filtered_tokens, "'this' should not be removed"
-    assert "test" in filtered_tokens, "'test' should not be removed"
-    assert "sentence" in filtered_tokens, "'sentence' should not be removed"
-    assert "is" not in filtered_tokens, "'is' should be removed"
-    assert "a" not in filtered_tokens, "'a' should be removed"
+    assert filtered_tokens == expected_tokens
+    assert "is" not in filtered_tokens
+    assert "a" not in filtered_tokens
