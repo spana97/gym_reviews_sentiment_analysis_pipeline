@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 def load(df, output_path: str) -> Path:

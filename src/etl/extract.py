@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 def extract(path: str) -> pd.DataFrame:

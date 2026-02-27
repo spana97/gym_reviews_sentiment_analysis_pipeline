@@ -2,10 +2,10 @@ import os
 
 import pandas as pd
 
-from src.etl.extract import extract
-from src.etl.helpers import combine_datasets
-from src.etl.load import load
-from src.etl.transform import transform
+from etl.extract import extract
+from etl.helpers import combine_datasets
+from etl.load import load
+from etl.transform import transform
 
 
 def test_run_etl_pipeline(tmp_path, test_config, google_test_df, trustpilot_test_df):

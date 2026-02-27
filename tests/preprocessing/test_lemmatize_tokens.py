@@ -1,6 +1,6 @@
 from nltk.stem import WordNetLemmatizer
 
-from src.text_preprocessing.helpers import lemmatize_tokens
+from text_preprocessing.helpers import lemmatize_tokens
 
 
 def test_lemmatize_tokens():

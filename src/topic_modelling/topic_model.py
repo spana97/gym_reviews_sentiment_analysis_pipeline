@@ -3,7 +3,7 @@ from pathlib import Path
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 class TopicModel:

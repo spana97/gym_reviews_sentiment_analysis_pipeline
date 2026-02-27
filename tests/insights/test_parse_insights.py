@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from src.insights.format_insights import parse_insights
+from insights.format_insights import parse_insights
 
 
 def test_topic_model():

@@ -1,9 +1,9 @@
-from src.etl.extract import extract
-from src.etl.helpers import combine_datasets
-from src.etl.load import load
-from src.etl.transform import transform
-from src.utils.config_loader import load_config
-from src.utils.logger import logger
+from etl.extract import extract
+from etl.helpers import combine_datasets
+from etl.load import load
+from etl.transform import transform
+from utils.config_loader import load_config
+from utils.logger import logger
 
 
 def run_etl_pipeline():

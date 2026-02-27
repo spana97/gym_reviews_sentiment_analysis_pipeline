@@ -1,4 +1,4 @@
-from src.text_preprocessing.helpers import clean_text
+from text_preprocessing.helpers import clean_text
 
 
 def test_clean_text():

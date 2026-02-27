@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 class InsightGenerator:

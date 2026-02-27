@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 def parse_insights(raw_response: str) -> pd.DataFrame:

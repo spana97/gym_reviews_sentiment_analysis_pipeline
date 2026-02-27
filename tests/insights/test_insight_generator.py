@@ -2,9 +2,9 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.insights.insight_generator import InsightGenerator
+from insights.insight_generator import InsightGenerator
 
-OPENAI_PATH = "src.insights.insight_generator.OpenAI"
+OPENAI_PATH = "insights.insight_generator.OpenAI"
 
 
 @pytest.fixture
