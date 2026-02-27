@@ -49,6 +49,7 @@ Actively in development. The core pipeline is implemented. Planned next steps in
 The project uses **Python 3.11.3**. Key dependencies are listed below. For the full list see `requirements.txt`.
 
 **Core**
+
 - `pandas`
 - `nltk`
 - `openai`
@@ -57,15 +58,17 @@ The project uses **Python 3.11.3**. Key dependencies are listed below. For the f
 - `certifi`
 
 **Topic Modelling**
+
 - `bertopic`
 - `sentence-transformers`
 - `transformers` + `tokenizers`
 - `torch`
 - `umap-learn`
 - `hdbscan`
-- `numba` *(requires LLVM; can cause install issues on some systems)*
+- `numba` _(requires LLVM; can cause install issues on some systems)_
 
 **Dev & Code Quality**
+
 - `pytest`
 - `mypy`
 - `pre-commit`
@@ -77,18 +80,21 @@ The project uses **Python 3.11.3**. Key dependencies are listed below. For the f
 ### Installing
 
 1. Clone the repository and install dependencies:
+
 ```bash
-git clone <repo-url>
-cd <repo-name>
+git clone https://github.com/spana97/gym-reviews-insight-analysis-pipeline.git
+cd gym-reviews-insight-analysis-pipeline
 pip install -r requirements.txt
 ```
 
 2. Create a `.env` file in the project root:
+
 ```
 OPENAI_API_KEY=your_api_key_here
 ```
 
 3. Install pre-commit hooks:
+
 ```bash
 pre-commit install
 ```
@@ -100,11 +106,13 @@ pre-commit install
 ### Executing the Program
 
 Run the ETL pipeline first to extract, clean and combine the raw Google and Trustpilot reviews:
+
 ```bash
 python3 scripts/run_etl_pipeline.py
 ```
 
 Then run the main pipeline to perform topic modelling and generate insights:
+
 ```bash
 python3 scripts/run_pipeline.py
 ```
