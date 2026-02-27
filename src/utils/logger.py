@@ -1,7 +1,13 @@
 import logging
 
 
-def setup_logger():
+def setup_logger() -> logging.Logger:
+    """
+    Set up and return a logger with file and console handlers.
+
+    File handler logs DEBUG and above to appLogger.log.
+    Console handler logs ERROR and above to stdout.
+    """
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
 

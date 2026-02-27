@@ -4,9 +4,7 @@ from utils.logger import logger
 
 
 def load(df, output_path: str) -> Path:
-    """
-    Save dataframe to parquet.
-    """
+    """Save dataframe to parquet."""
     logger.info(f"Loading data to {output_path}")
 
     try:

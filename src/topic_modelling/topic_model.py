@@ -1,4 +1,5 @@
 from pathlib import Path
+import pandas as pd
 
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
@@ -7,11 +8,16 @@ from utils.logger import logger
 
 
 class TopicModel:
-    """
-    BERTopic class for topic modelling.
-    """
+    """Wraps BERTopic to fit, save, load and extract topic information."""
 
     def __init__(self, config: dict):
+        """
+        Initializes TopicModel with configuration.
+
+        Args:
+            config (dict): Configuration dictionary containing
+                topic_model parameters, model and data save paths.
+        """
         logger.info(f"Initializing BERTopic model with config: {config}")
         self.config = config
 
@@ -37,10 +43,15 @@ class TopicModel:
 
         logger.info("BERTopic model initialized successfully.")
 
-    def fit(self, documents: list):
+    def fit(self, documents: list[str]) -> tuple[list, list]:
         """
         Fit the BERTopic model to the documents.
-        Returns the topics and probabilities.
+
+        Args:
+            documents (list): List of documents for topic modelling.
+
+        Returns:
+            tuple[list, list]: Topic assignments and their probabilities.
         """
         logger.info("Fitting BERTopic model to documents...")
 
@@ -54,9 +65,7 @@ class TopicModel:
         return topics, probabilities
 
     def save(self, path: str):
-        """
-        Save the BERTopic model to the specified path.
-        """
+        """Save the BERTopic model to the specified path."""
         logger.info(f"Saving BERTopic model to {path}...")
         try:
             Path(path).parent.mkdir(parents=True, exist_ok=True)
@@ -67,9 +76,7 @@ class TopicModel:
         logger.info(f"BERTopic model saved successfully to {path}.")
 
     def load(self, path: str):
-        """
-        Load the BERTopic model from the specified path.
-        """
+        """Load the BERTopic model from the specified path."""
         logger.info(f"Loading BERTopic model from {path}...")
         try:
             self.topic_model = BERTopic.load(path)
@@ -78,10 +85,8 @@ class TopicModel:
             raise
         logger.info(f"BERTopic model loaded successfully from {path}.")
 
-    def get_topic_info(self):
-        """
-        Get the topic information from the BERTopic model.
-        """
+    def get_topic_info(self) -> pd.DataFrame:
+        """Get the topic information from the BERTopic model."""
         logger.info("Getting topic information from BERTopic model...")
         try:
             topic_info = self.topic_model.get_topic_info()

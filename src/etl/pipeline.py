@@ -7,13 +7,7 @@ from utils.logger import logger
 
 
 def run_etl_pipeline():
-    """
-    Runs ETL pipeline:
-    1. Extracts raw Google and Trustpilot reviews.
-    2. Transforms each dataset.
-    3. Combines datasets.
-    4. Saves as a parquet.
-    """
+    """Run the full ETL pipeline for Google and Trustpilot reviews."""
     logger.info("Starting ETL pipeline")
 
     config = load_config()
