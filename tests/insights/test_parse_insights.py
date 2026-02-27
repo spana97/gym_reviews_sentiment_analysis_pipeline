@@ -16,10 +16,10 @@ def test_topic_model():
 
     df = parse_insights(data)
 
-    assert isinstance(df, pd.DataFrame), "Output should be a DataFrame"
-    assert df.shape == (2, 3), "DataFrame should have 2 rows and 3 columns"
+    assert isinstance(df, pd.DataFrame)
+    assert df.shape == (2, 3)
     assert list(df.columns) == [
         "id",
         "test_num",
         "result",
-    ], "DataFrame should have the correct columns"
+    ]

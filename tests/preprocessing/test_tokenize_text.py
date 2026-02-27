@@ -17,7 +17,5 @@ def test_tokenize_text():
         "numbers",
     ]
 
-    assert tokens == expected, f"Expected tokens {expected} but got {tokens}"
-    assert len(tokens) == 9, (
-        "There should be exactly 9 tokens after cleaning and tokenization"
-    )
+    assert tokens == expected
+    assert len(tokens) == 9

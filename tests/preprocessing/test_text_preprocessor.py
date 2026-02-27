@@ -8,4 +8,4 @@ def test_text_preprocessor():
 
     output = preprocessor.preprocess(input_text)
     assert output == expected, f"Expected {expected}, got {output}"
-    assert isinstance(output, str), "Output should be a string"
+    assert isinstance(output, str)
