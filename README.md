@@ -149,12 +149,39 @@ Behaviour can be adjusted via `config.yaml`. Notable parameters include:
 
 ## Version History
 
-- `0.5.0` — Logging, CI/CD actions, pre-commit updates (ruff, detect-secrets)
-- `0.4.0` — Full pipeline integrated
-- `0.3.0` — Topic modelling and insight generation implemented
-- `0.2.0` — Text preprocessing implemented
-- `0.1.0` — ETL pipeline and initial repository setup
+> **Note:** Releases prior to v1.0.0 are not tracked on GitHub Releases. 
+> See version history below for a full changelog.
 
+### v1.0.0 — Full Release (Feb 27, 2026)
+Complete end-to-end gym review insight analysis pipeline including ETL, text preprocessing, topic modelling, insight generation, full pipeline integration, logging, and CI/CD.
+
+### v0.5.0 — Logging, CI & Pre-commit Updates (Feb 26, 2026)
+- Added logging across ETL, text preprocessing, topic modelling, and insights
+- Added CI GitHub Actions (ruff, mypy, pytest)
+- Replaced flake8, black, isort with ruff in pre-commit
+- Added detect-secrets to pre-commit
+
+### v0.4.0 — Full Pipeline Integration (Feb 25, 2026)
+- Integrated full end-to-end pipeline
+- Added pipeline notebook (03_notebook)
+- Downgraded Python to 3.11 for compatibility
+
+### v0.3.0 — Topic Modelling & Insight Generation (Feb 24, 2026)
+- Implemented topic modelling with JSON output formatting
+- Implemented insight generator
+- Added pytests for topic modelling and insights
+
+### v0.2.0 — Text Preprocessing (Feb 21, 2026)
+- Implemented text preprocessor
+- Added text preprocessor pytests
+- Added feature engineering notebook
+
+### v0.1.0 — Initial Release (Feb 16, 2026)
+- Initial repository structure and basic CI
+- Added ETL pipeline
+- Added synthetic gym review datasets
+- Added pre-commit config (black, flake8)
+  
 ---
 
 ## Authors
