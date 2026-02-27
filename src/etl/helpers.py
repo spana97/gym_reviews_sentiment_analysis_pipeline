@@ -2,7 +2,7 @@ from typing import List
 
 import pandas as pd
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 # -----------------------------
 # Transform helpers

@@ -2,7 +2,7 @@ from typing import Optional, Set
 
 from nltk.stem import WordNetLemmatizer
 
-from src.text_preprocessing.helpers import (
+from text_preprocessing.helpers import (
     clean_text,
     ensure_nltk_resources,
     get_stopwords,
@@ -10,7 +10,7 @@ from src.text_preprocessing.helpers import (
     remove_stopwords,
     tokenize_text,
 )
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 class TextPreprocessor:

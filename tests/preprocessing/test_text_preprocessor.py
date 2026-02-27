@@ -1,4 +1,4 @@
-from src.text_preprocessing.text_preprocessor import TextPreprocessor
+from text_preprocessing.text_preprocessor import TextPreprocessor
 
 
 def test_text_preprocessor():

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.etl.transform import transform
+from etl.transform import transform
 
 
 def test_transform_google(google_test_df, test_config):

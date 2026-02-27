@@ -3,11 +3,11 @@ import os
 import pandas as pd
 from dotenv import load_dotenv
 
-from src.insights.format_insights import parse_insights
-from src.insights.insight_generator import InsightGenerator
-from src.text_preprocessing.text_preprocessor import TextPreprocessor
-from src.topic_modelling.format_json import format_json
-from src.topic_modelling.topic_model import TopicModel
+from insights.format_insights import parse_insights
+from insights.insight_generator import InsightGenerator
+from text_preprocessing.text_preprocessor import TextPreprocessor
+from topic_modelling.format_json import format_json
+from topic_modelling.topic_model import TopicModel
 
 load_dotenv()
 

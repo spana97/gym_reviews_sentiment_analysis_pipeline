@@ -5,7 +5,7 @@ from typing import Optional, Set
 import certifi
 import nltk
 
-from src.utils.logger import logger
+from utils.logger import logger
 
 
 def _create_ssl_context() -> ssl.SSLContext:

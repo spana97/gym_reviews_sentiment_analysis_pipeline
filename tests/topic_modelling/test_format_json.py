@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from src.topic_modelling.format_json import format_json
+from topic_modelling.format_json import format_json
 
 
 def test_format_json():

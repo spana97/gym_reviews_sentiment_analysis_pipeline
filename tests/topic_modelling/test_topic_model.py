@@ -5,10 +5,10 @@ import pytest
 
 sys.modules["bertopic"] = MagicMock()
 sys.modules["sentence_transformers"] = MagicMock()
-from src.topic_modelling.topic_model import TopicModel  # noqa: E402
+from topic_modelling.topic_model import TopicModel  # noqa: E402
 
-BERTOPIC_PATH = "src.topic_modelling.topic_model.BERTopic"
-ST_PATH = "src.topic_modelling.topic_model.SentenceTransformer"
+BERTOPIC_PATH = "topic_modelling.topic_model.BERTopic"
+ST_PATH = "topic_modelling.topic_model.SentenceTransformer"
 
 
 @pytest.fixture

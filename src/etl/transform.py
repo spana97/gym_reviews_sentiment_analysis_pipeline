@@ -1,7 +1,7 @@
 import pandas as pd
 
-from src.etl.helpers import cast_types, filter_rows, rename_and_select
-from src.utils.logger import logger
+from etl.helpers import cast_types, filter_rows, rename_and_select
+from utils.logger import logger
 
 
 def transform(df: pd.DataFrame, source: str, config: dict) -> pd.DataFrame:

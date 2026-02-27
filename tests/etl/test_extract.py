@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.etl.extract import extract
+from etl.extract import extract
 
 
 def test_extract(tmp_path):

@@ -1,4 +1,4 @@
-from src.text_preprocessing.helpers import tokenize_text
+from text_preprocessing.helpers import tokenize_text
 
 
 def test_tokenize_text():
