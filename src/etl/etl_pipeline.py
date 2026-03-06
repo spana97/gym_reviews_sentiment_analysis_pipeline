@@ -43,7 +43,7 @@ def run_etl_pipeline():
     # Load
     try:
         logger.info("Loading combined dataset")
-        load(combined, config["data"]["processed_output"])
+        load(combined, config["data"]["etl_output"])
     except Exception as e:
         logger.error(f"Error loading combined dataset: {e}")
         raise
