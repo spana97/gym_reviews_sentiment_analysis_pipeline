@@ -1,51 +1,29 @@
-from etl.extract import extract
-from etl.helpers import combine_datasets
-from etl.load import load
-from etl.transform import transform
+from etl.extract_service import extract_dataset
+from etl.transform.transform_service import transform_dataset
+from etl.combine_service import combine_datasets
+from etl.load_service import load_dataset
 from utils.config_loader import load_config
 from utils.logger import logger
 
 
 def run_etl_pipeline():
-    """Run the full ETL pipeline for Google and Trustpilot reviews."""
+    """Orchestrate full ETL for reviews."""
     logger.info("Starting ETL pipeline")
 
     config = load_config()
 
-    # Extract
-    try:
-        google_raw = extract(config["data"]["raw_google"])
-        trust_raw = extract(config["data"]["raw_trustpilot"])
-    except Exception as e:
-        logger.error(f"Error extracting raw datasets: {e}")
-        raise
-    logger.info("Datasets extracted successfully")
+    datasets = {}
+    for source in ["google", "trustpilot"]:
+        raw_path = config["data"][f"raw_{source}"]
+        datasets[source] = extract_dataset(raw_path)
 
-    # Transform
-    try:
-        logger.info("Transforming datasets")
-        google_clean = transform(google_raw, "google", config)
-        trustpilot_clean = transform(trust_raw, "trustpilot", config)
-    except Exception as e:
-        logger.error(f"Error transforming datasets: {e}")
-        raise
-    logger.info("Datasets transformed successfully")
+    for source in datasets:
+        datasets[source] = transform_dataset(datasets[source], source, config)
 
-    # Combine datasets
-    try:
-        logger.info("Combining datasets")
-        combined = combine_datasets([google_clean, trustpilot_clean])
-    except Exception as e:
-        logger.error(f"Error combining datasets: {e}")
-        raise
-    logger.info("Datasets combined successfully")
+    combined = combine_datasets(list(datasets.values()))
 
-    # Load
-    try:
-        logger.info("Loading combined dataset")
-        load(combined, config["data"]["etl_output"])
-    except Exception as e:
-        logger.error(f"Error loading combined dataset: {e}")
-        raise
+    load_dataset(combined, config["data"]["etl_output"])
 
     logger.info("ETL pipeline completed successfully")
+
+    return combined
