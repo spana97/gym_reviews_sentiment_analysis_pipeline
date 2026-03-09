@@ -153,12 +153,10 @@ Behaviour can be adjusted via `config.yaml`. Notable parameters include:
 > **Note:** Releases prior to v1.0.0 are not tracked on GitHub Releases.
 > See version history below for a full changelog.
 
-### v0.6.0 - Refactor full pipeline (**\_**Mar2026)
+### v0.6.0 - Refactor full pipeline (09Mar2026)
 
-- Tidied ETL pipeline
-- Separated TopicModel and InsightGenerator code in pipeline into smaller pipelines and units
-- Tidied up output paths names in config
-- Added interim data folder
+- Separated ETL pipeline logic into smaller units
+- Separated helper functions into smaller modules - column_transforms and filter_rows
 
 ### v0.5.1 - Fix BERTopic dependencies (03Mar2026)
 
