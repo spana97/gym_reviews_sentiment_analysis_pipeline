@@ -3,7 +3,7 @@ import pandas as pd
 from utils.logger import logger
 
 
-def extract(path: str) -> pd.DataFrame:
+def extract_dataset(path: str) -> pd.DataFrame:
     """Load CSV into a DataFrame."""
     try:
         df = pd.read_csv(path)

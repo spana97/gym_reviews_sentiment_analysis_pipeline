@@ -39,6 +39,7 @@ Actively in development. The core pipeline is implemented. Planned next steps in
 - REST API deployment via FastAPI
 - Cloud integration (S3 and broader AWS/GCP storage)
 - Docker containerisation for portable deployment
+- CD workflows
 
 ---
 
@@ -108,16 +109,16 @@ pre-commit install
 Run the ETL pipeline first to extract, clean and combine the raw Google and Trustpilot reviews:
 
 ```bash
-python3 scripts/run_etl_pipeline.py
+PYTHONPATH=src python -m scripts.run_etl
 ```
 
 Then run the main pipeline to perform topic modelling and generate insights:
 
 ```bash
-python3 scripts/run_pipeline.py
+PYTHONPATH=src python -m scripts.run_pipeline
 ```
 
-Outputs will be saved to `data/processed/` and the BERTopic model to `models/`.
+Outputs will be saved to `data/interim` (ETL and BERTopic outputs), `data/processed/` (LLM insight output) and the BERTopic model to `models/`.
 
 #### Configuration
 
@@ -151,6 +152,13 @@ Behaviour can be adjusted via `config.yaml`. Notable parameters include:
 
 > **Note:** Releases prior to v1.0.0 are not tracked on GitHub Releases.
 > See version history below for a full changelog.
+
+### v0.6.0 - Refactor full pipeline (**\_**Mar2026)
+
+- Tidied ETL pipeline
+- Separated TopicModel and InsightGenerator code in pipeline into smaller pipelines and units
+- Tidied up output paths names in config
+- Added interim data folder
 
 ### v0.5.1 - Fix BERTopic dependencies (03Mar2026)
 
