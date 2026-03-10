@@ -153,6 +153,9 @@ Behaviour can be adjusted via `config.yaml`. Notable parameters include:
 > **Note:** Releases prior to v1.0.0 are not tracked on GitHub Releases.
 > See version history below for a full changelog.
 
+### v1.0.0 — Full Release (10Mar2026)
+Complete end-to-end gym review insight analysis pipeline including ETL, text preprocessing, topic modelling, insight generation, full pipeline integration, logging, and CI.
+
 ### v0.7.0 - Refactor full model pipeline into topic and insight pipelines (10Mar2026)
 
 - Separated full pipeline logic into topic_pipeline and insight_pipelines
