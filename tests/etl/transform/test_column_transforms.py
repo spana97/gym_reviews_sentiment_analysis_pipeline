@@ -4,17 +4,19 @@ from etl.transform.column_transforms import rename_and_select, cast_types
 
 
 @pytest.mark.parametrize(
-    "df_fixture,col_mapping,df_renamed_fixture",
+    "df_fixture,source,df_renamed_fixture",
     [
-        ("test_google_df", "google_col_mapping", "test_google_df_renamed"),
-        ("test_trustpilot_df", "trustpilot_col_mapping", "test_trustpilot_df_renamed"),
+        ("test_google_df", "google", "test_google_df_renamed"),
+        ("test_trustpilot_df", "trustpilot", "test_trustpilot_df_renamed"),
     ],
     ids=["google", "trustpilot"],
 )
-def test_rename_and_select(df_fixture, col_mapping, df_renamed_fixture, request):
+def test_rename_and_select(
+    df_fixture, source, df_renamed_fixture, test_config, request
+):
 
     df = request.getfixturevalue(df_fixture)
-    mapping = request.getfixturevalue(col_mapping)
+    mapping = test_config["rename_mappings"][source]
     expected = request.getfixturevalue(df_renamed_fixture)
 
     result = rename_and_select(df, mapping)
@@ -25,19 +27,18 @@ def test_rename_and_select(df_fixture, col_mapping, df_renamed_fixture, request)
 
 
 @pytest.mark.parametrize(
-    "df_renamed_fixture,schema_fixture",
+    "df_renamed_fixture",
     [
-        ("test_google_df_renamed", "schema"),
-        ("test_trustpilot_df_renamed", "schema"),
+        ("test_google_df_renamed"),
+        ("test_trustpilot_df_renamed"),
     ],
     ids=["google", "trustpilot"],
 )
-def test_cast_types(df_renamed_fixture, schema_fixture, request):
+def test_cast_types(df_renamed_fixture, request, test_config):
 
     df = request.getfixturevalue(df_renamed_fixture)
-    schema = request.getfixturevalue(schema_fixture)
 
-    result = cast_types(df, schema)
+    result = cast_types(df, test_config["schema"])
 
     assert pd.api.types.is_string_dtype(result["source"])
     assert pd.api.types.is_string_dtype(result["location"])

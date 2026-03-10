@@ -8,24 +8,15 @@ OPENAI_PATH = "insights.insight_generator.OpenAI"
 
 
 @pytest.fixture
-def mock_config():
-    return {
-        "max_output_tokens": 10,
-        "developer_prompt": "You are a data scientist",
-        "user_prompt": "Analyse {clusters}",
-    }
-
-
-@pytest.fixture
-def insight_generator(mock_config):
+def insight_generator(test_config, test_api_key):
     with patch(OPENAI_PATH):
-        yield InsightGenerator(mock_config, api_key="test_key")
+        yield InsightGenerator(test_config["insights_generator"], test_api_key)
 
 
-def test_init(mock_config):
+def test_init(test_config, test_api_key):
     with patch(OPENAI_PATH) as mock_openai:
-        InsightGenerator(mock_config, api_key="test_key")
-        mock_openai.assert_called_once_with(api_key="test_key")
+        InsightGenerator(test_config["insights_generator"], test_api_key)
+        mock_openai.assert_called_once_with(api_key=test_api_key)
 
 
 def test_build_user_prompt(insight_generator):

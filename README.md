@@ -153,10 +153,19 @@ Behaviour can be adjusted via `config.yaml`. Notable parameters include:
 > **Note:** Releases prior to v1.0.0 are not tracked on GitHub Releases.
 > See version history below for a full changelog.
 
-### v0.6.0 - Refactor full pipeline (09Mar2026)
+### v0.7.0 - Refactor full model pipeline into topic and insight pipelines (10Mar2026)
+
+- Separated full pipeline logic into topic_pipeline and insight_pipelines
+- Updated format_json into format_and_save_clusters helper
+- Refactored topic_modelling and insight conftest and pytests
+
+### v0.6.0 - Refactor ETL pipeline (09Mar2026)
 
 - Separated ETL pipeline logic into smaller units
 - Separated helper functions into smaller modules - column_transforms and filter_rows
+- Updated config output paths
+- Created interim data folder and updated data pathways
+- Refactored ETL conftest and pytests
 
 ### v0.5.1 - Fix BERTopic dependencies (03Mar2026)
 

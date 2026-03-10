@@ -2,37 +2,75 @@ import pytest
 import pandas as pd
 import numpy as np
 
+# ------------------------
 # Global
+# ------------------------
 
 
-@pytest.fixture
-def schema():
+@pytest.fixture(scope="function")
+def test_config():
     return {
-        "source": "string",
-        "location": "string",
-        "date_created": "datetime",
-        "review": "string",
-        "score": "int64",
+        "data": {
+            "raw_google": "path/to/google.csv",
+            "raw_trustpilot": "path/to/trustpilot.csv",
+            "etl_output": "path/to/output.csv",
+        },
+        "rename_mappings": {
+            "google": {
+                "Social Media Source": "source",
+                "Club's Name": "location",
+                "Creation Date": "date_created",
+                "Comment": "review",
+                "Overall Score": "score",
+            },
+            "trustpilot": {
+                "Source Of Review": "source",
+                "Location Name": "location",
+                "Review Created (UTC)": "date_created",
+                "Review Content": "review",
+                "Review Stars": "score",
+            },
+        },
+        "schema": {
+            "source": "string",
+            "location": "string",
+            "date_created": "datetime",
+            "review": "string",
+            "score": "int64",
+        },
+        "filters": {"low_rating_max": 3},
+        "text_preprocessing": {"extra_stopwords": []},
+        "topic_model": {
+            "language": "English",
+            "calculate_probabilities": False,
+            "verbose": False,
+            "embed_model": "all-MiniLM-L6-v2",
+            "low_memory": True,
+            "nr_topics": "auto",
+            "model_output": "path/to/model",
+            "topics_output": "path/to/topics.csv",
+            "representative_docs_output": "path/to/clusters.json",
+        },
+        "insights_generator": {
+            "max_output_tokens": 10,
+            "developer_prompt": "You are a data scientist",
+            "user_prompt": "Analyse {clusters}",
+            "insights_output": "dummy_output.csv",
+        },
     }
 
 
-@pytest.fixture
-def low_rating_max():
-    return 3
+@pytest.fixture(scope="session")
+def test_api_key():
+    return "test_key"
 
 
-@pytest.fixture
-def google_col_mapping():
-    return {
-        "Social Media Source": "source",
-        "Club's Name": "location",
-        "Creation Date": "date_created",
-        "Comment": "review",
-        "Overall Score": "score",
-    }
+# ------------------------
+# Google
+# ------------------------
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def test_google_df():
     return pd.DataFrame(
         {
@@ -52,7 +90,7 @@ def test_google_df():
     )
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def test_google_df_renamed():
     return pd.DataFrame(
         {
@@ -71,21 +109,12 @@ def test_google_df_renamed():
     )
 
 
+# ------------------------
 # Trustpilot
+# ------------------------
 
 
-@pytest.fixture
-def trustpilot_col_mapping():
-    return {
-        "Source Of Review": "source",
-        "Location Name": "location",
-        "Review Created (UTC)": "date_created",
-        "Review Content": "review",
-        "Review Stars": "score",
-    }
-
-
-@pytest.fixture
+@pytest.fixture(scope="session")
 def test_trustpilot_df():
     return pd.DataFrame(
         {
@@ -105,7 +134,7 @@ def test_trustpilot_df():
     )
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def test_trustpilot_df_renamed():
     return pd.DataFrame(
         {
@@ -122,23 +151,3 @@ def test_trustpilot_df_renamed():
             "score": [1, 3, 5, 2, 1],
         }
     )
-
-
-# test_config
-
-
-@pytest.fixture
-def test_config(schema, low_rating_max, google_col_mapping, trustpilot_col_mapping):
-    return {
-        "rename_mappings": {
-            "google": google_col_mapping,
-            "trustpilot": trustpilot_col_mapping,
-        },
-        "schema": schema,
-        "filters": {"low_rating_max": low_rating_max},
-        "data": {
-            "raw_google": "path/to/google.csv",
-            "raw_trustpilot": "path/to/trustpilot.csv",
-            "etl_output": "path/to/output.csv",
-        },
-    }

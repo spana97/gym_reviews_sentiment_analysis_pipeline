@@ -43,10 +43,10 @@ def test_removes_nan_reviews(df_fixture, source, test_config, request):
     [("test_google_df", "google"), ("test_trustpilot_df", "trustpilot")],
     ids=["google", "trustpilot"],
 )
-def test_filters_high_scores(df_fixture, source, test_config, low_rating_max, request):
+def test_filters_high_scores(df_fixture, source, test_config, request):
     df = request.getfixturevalue(df_fixture)
     transformed = transform_dataset(df, source, test_config)
-    assert transformed["score"].max() <= low_rating_max
+    assert transformed["score"].max() <= test_config["filters"]["low_rating_max"]
 
 
 @pytest.mark.parametrize(
