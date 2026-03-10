@@ -53,12 +53,29 @@ class TopicModel:
         Returns:
             tuple[list, list]: Topic assignments and their probabilities.
         """
-        logger.info("Fitting BERTopic model to documents...")
-
         try:
             topics, probabilities = self.topic_model.fit_transform(documents)
         except Exception as e:
-            logger.error(f"Error fitting BERTopic model: {e}")
+            logger.error(f"Error fit_transform BERTopic model: {e}")
+            raise
+
+        logger.info("BERTopic model fitted successfully.")
+        return topics, probabilities
+
+    def transform(self, documents: list[str]) -> tuple[list, list]:
+        """
+        Predict topics for new documents without re-fitting.
+
+        Args:
+            documents (list): List of documents for topic modelling.
+
+        Returns:
+            tuple[list, list]: Topic assignments and their probabilities.
+        """
+        try:
+            topics, probabilities = self.topic_model.transform(documents)
+        except Exception as e:
+            logger.error(f"Error transforming BERTopic model: {e}")
             raise
 
         logger.info("BERTopic model fitted successfully.")
@@ -94,4 +111,5 @@ class TopicModel:
             logger.error(f"Error getting topic information: {e}")
             raise
         logger.info("Topic information retrieved successfully.")
+
         return topic_info

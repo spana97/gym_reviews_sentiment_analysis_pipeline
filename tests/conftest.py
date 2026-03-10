@@ -141,4 +141,12 @@ def test_config(schema, low_rating_max, google_col_mapping, trustpilot_col_mappi
             "raw_trustpilot": "path/to/trustpilot.csv",
             "etl_output": "path/to/output.csv",
         },
+        "text_preprocessing": {
+            "extra_stopwords": [],
+        },
+        "topic_model": {
+            "model_output": "path/to/model",
+            "topics_output": "path/to/topics.csv",
+            "representative_docs_output": "path/to/clusters.json",
+        },
     }

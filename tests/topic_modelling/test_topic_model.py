@@ -8,7 +8,7 @@ sys.modules["sentence_transformers"] = MagicMock()
 from topic_modelling.topic_model import TopicModel  # noqa: E402
 
 BERTOPIC_PATH = "topic_modelling.topic_model.BERTopic"
-ST_PATH = "topic_modelling.topic_model.SentenceTransformer"
+SENTENCE_TRANSFORMER_PATH = "topic_modelling.topic_model.SentenceTransformer"
 
 
 @pytest.fixture
@@ -25,7 +25,10 @@ def mock_config():
 
 @pytest.fixture
 def topic_model(mock_config):
-    with patch(BERTOPIC_PATH) as mock_bertopic, patch(ST_PATH) as mock_st:
+    with (
+        patch(BERTOPIC_PATH) as mock_bertopic,
+        patch(SENTENCE_TRANSFORMER_PATH) as mock_st,
+    ):
         mock_bertopic_instance = mock_bertopic.return_value
         mock_st_instance = mock_st.return_value
 
@@ -37,9 +40,13 @@ def topic_model(mock_config):
 
 
 def test_init(mock_config):
-    with patch(BERTOPIC_PATH) as mock_bertopic, patch(ST_PATH) as mock_st:
+    with (
+        patch(BERTOPIC_PATH) as mock_bertopic,
+        patch(SENTENCE_TRANSFORMER_PATH) as mock_st,
+    ):
         TopicModel(mock_config)
         mock_st.assert_called_once_with(mock_config["embed_model"])
+
         mock_bertopic.assert_called_once_with(
             language=mock_config["language"],
             calculate_probabilities=mock_config["calculate_probabilities"],
