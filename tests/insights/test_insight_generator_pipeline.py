@@ -25,10 +25,10 @@ def test_api_key_not_found_raise(test_config):
             run_insight_generator_pipeline(test_config)
 
 
-def test_representative_docs_path_not_found_raises(test_config):
+def test_representative_docs_path_not_found_raises(test_config, test_api_key):
     test_config["topic_model"]["representative_docs_output"] = "nonexistent.json"
     with (
-        patch(GET_ENV_PATH, return_value="mock-api-token"),  # pragma: allowlist secret
+        patch(GET_ENV_PATH, return_value=test_api_key),
         patch(PATH_EXISITS_PATH, return_value=False),
     ):
         with pytest.raises(
@@ -37,7 +37,7 @@ def test_representative_docs_path_not_found_raises(test_config):
             run_insight_generator_pipeline(test_config)
 
 
-def test_pipeline_success(test_config):
+def test_pipeline_success(test_config, test_api_key):
 
     sample_representative_docs = {"cluster 1": ["dirty", "not clean"]}
     mock_insights = [{"topic": "example", "insight": "test"}]
@@ -45,7 +45,7 @@ def test_pipeline_success(test_config):
     mock_file = mock_open(read_data=json.dumps(sample_representative_docs))
 
     with (
-        patch(GET_ENV_PATH, return_value="mock-api-token"),  # pragma: allowlist secret
+        patch(GET_ENV_PATH, return_value=test_api_key),
         patch(PATH_EXISITS_PATH, return_value=True),
         patch("builtins.open", mock_file),
         patch(INSIGHT_GENERATOR_PATH) as mock_generator,
@@ -62,7 +62,7 @@ def test_pipeline_success(test_config):
 
         mock_generator.assert_called_once_with(
             test_config["insights_generator"],
-            api_key="mock-api-token",  # pragma: allowlist secret
+            api_key=test_api_key,
         )
 
         mock_generator_instance.generate_insights.assert_called_once()

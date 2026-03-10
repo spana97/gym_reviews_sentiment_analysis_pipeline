@@ -11,20 +11,20 @@ BERTOPIC_PATH = "topic_modelling.topic_model.BERTopic"
 SENTENCE_TRANSFORMER_PATH = "topic_modelling.topic_model.SentenceTransformer"
 
 
-@pytest.fixture
-def mock_config():
-    return {
-        "language": "english",
-        "calculate_probabilities": True,
-        "verbose": False,
-        "embed_model": "all-MiniLM-L6-v2",
-        "low_memory": False,
-        "nr_topics": "auto",
-    }
+# @pytest.fixture
+# def test_config():
+#     return {
+#         "language": "english",
+#         "calculate_probabilities": True,
+#         "verbose": False,
+#         "embed_model": "all-MiniLM-L6-v2",
+#         "low_memory": False,
+#         "nr_topics": "auto",
+#     }
 
 
 @pytest.fixture
-def topic_model(mock_config):
+def topic_model(test_config):
     with (
         patch(BERTOPIC_PATH) as mock_bertopic,
         patch(SENTENCE_TRANSFORMER_PATH) as mock_st,
@@ -32,28 +32,30 @@ def topic_model(mock_config):
         mock_bertopic_instance = mock_bertopic.return_value
         mock_st_instance = mock_st.return_value
 
-        model = TopicModel(mock_config)
+        model = TopicModel(test_config["topic_model"])
 
         model._mock_bertopic_instance = mock_bertopic_instance
         model._mock_st_instance = mock_st_instance
         yield model
 
 
-def test_init(mock_config):
+def test_init(test_config):
     with (
         patch(BERTOPIC_PATH) as mock_bertopic,
         patch(SENTENCE_TRANSFORMER_PATH) as mock_st,
     ):
-        TopicModel(mock_config)
-        mock_st.assert_called_once_with(mock_config["embed_model"])
+        TopicModel(test_config["topic_model"])
+        mock_st.assert_called_once_with(test_config["topic_model"]["embed_model"])
 
         mock_bertopic.assert_called_once_with(
-            language=mock_config["language"],
-            calculate_probabilities=mock_config["calculate_probabilities"],
-            verbose=mock_config["verbose"],
+            language=test_config["topic_model"]["language"],
+            calculate_probabilities=test_config["topic_model"][
+                "calculate_probabilities"
+            ],
+            verbose=test_config["topic_model"]["verbose"],
             embedding_model=mock_st.return_value,
-            low_memory=mock_config["low_memory"],
-            nr_topics=mock_config["nr_topics"],
+            low_memory=test_config["topic_model"]["low_memory"],
+            nr_topics=test_config["topic_model"]["nr_topics"],
         )
 
 
