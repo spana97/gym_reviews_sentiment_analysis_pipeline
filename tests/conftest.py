@@ -149,4 +149,10 @@ def test_config(schema, low_rating_max, google_col_mapping, trustpilot_col_mappi
             "topics_output": "path/to/topics.csv",
             "representative_docs_output": "path/to/clusters.json",
         },
+        "insights_generator": {
+            "max_output_tokens": 1,
+            "developer_prompt": "You're an analyst",
+            "user_prompt": "Analyse: {clusters}",
+            "insights_output": "dummy_output.csv",
+        },
     }

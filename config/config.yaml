@@ -1,7 +1,7 @@
 data:
   raw_google: "data/raw/google_reviews.csv"
   raw_trustpilot: "data/raw/trustpilot_reviews.csv"
-  processed_output: "data/processed/low_rating_reviews_dataset.parquet"
+  etl_output: "data/interim/low_rating_reviews_dataset.parquet"
 
 rename_mappings:
   google:
@@ -39,8 +39,9 @@ topic_model:
   embed_model: "all-MiniLM-L6-v2"
   low_memory: True
   nr_topics: "auto"
-  model_output_path: "models/bertopic_model"
-  topics_output_path: "data/processed/bertopic_topics.csv"
+  model_output: "models/bertopic_model"
+  topics_output: "data/interim/bertopic_topics.csv"
+  representative_docs_output: "data/interim/representative_docs.json"
 
 insights_generator:
   max_output_tokens: 2000
@@ -74,4 +75,4 @@ insights_generator:
     ]
     Here are the clusters:
     {clusters}
-  insights_output_path: "data/processed/cluster_insights.csv"
+  insights_output: "data/processed/cluster_insights.csv"
